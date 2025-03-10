@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simplified IDEA Lab logo representation -->
+  <rect x="0" y="0" width="120" height="40" rx="2" fill="#1D8348"/>
+  <path d="M25 8L40 20L25 32" stroke="white" stroke-width="2"/>
+  <text x="50" y="24" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">IDEA LAB</text>
+</svg>

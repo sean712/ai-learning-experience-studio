@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Assistant {
+  id            String    @id
+  name          String
+  instructions  String
+  model         String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accessCode    String
+  shareableUrl  String    @unique
+  files         File[]
+  isPublic      Boolean   @default(false)
+  isDemo        Boolean   @default(false)
+}
+
+model File {
+  id            String    @id
+  name          String
+  assistantId   String
+  vectorStoreId String?
+  createdAt     DateTime  @default(now())
+  assistant     Assistant @relation(fields: [assistantId], references: [id], onDelete: Cascade)
+}
