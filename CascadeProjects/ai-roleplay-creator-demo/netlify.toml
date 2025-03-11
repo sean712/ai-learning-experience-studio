@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && npm run build"
+  command = "npm install react-markdown remark-gfm && npm install && npm run build"
   publish = ".next"
 
 [build.environment]
