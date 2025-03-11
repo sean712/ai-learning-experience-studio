@@ -16,7 +16,13 @@
 [functions]
   node_bundler = "esbuild"
   # Increase timeout from default 10s to 26s (max for regular Netlify accounts)
-  included_files = ["**/*"]
+  # Be selective about which files to include to avoid exceeding the 250 MB limit
+  included_files = [
+    "src/**/*",
+    "public/**/*",
+    "package.json",
+    "next.config.js"
+  ]
 
 # Function timeout is set in the build.environment section above
 
