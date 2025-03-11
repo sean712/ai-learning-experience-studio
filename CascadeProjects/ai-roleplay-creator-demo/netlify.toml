@@ -6,6 +6,8 @@
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
   NODE_VERSION = "20"
+  # Note: Set the actual DATABASE_URL in the Netlify UI
+  # DATABASE_URL = "postgresql://username:password@hostname:port/database"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
