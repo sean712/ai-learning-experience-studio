@@ -1,6 +1,13 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// NOTE: This project no longer uses Prisma or a database
+// We have switched to using localStorage for data storage in the demo version
+// The schema is kept for reference purposes only
 
+// If you want to re-enable database functionality:
+// 1. Uncomment the schema below
+// 2. Replace the localStorage implementation with Prisma in the API routes
+// 3. Set up a PostgreSQL database and configure the DATABASE_URL environment variable
+
+/*
 generator client {
   provider = "prisma-client-js"
 }
@@ -32,3 +39,4 @@ model File {
   createdAt     DateTime  @default(now())
   assistant     Assistant @relation(fields: [assistantId], references: [id], onDelete: Cascade)
 }
+*/

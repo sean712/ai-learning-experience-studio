@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import prisma from '@/lib/prisma';
+import { findAssistantByName, createAssistant } from '@/lib/localStorage';
 import { nanoid } from 'nanoid';
 
 // Initialize the OpenAI client with the API key
@@ -11,11 +11,7 @@ const openai = new OpenAI({
 export async function GET(req: NextRequest) {
   try {
     // Check if demo already exists
-    const existingDemo = await prisma.assistant.findFirst({
-      where: {
-        isDemo: true
-      }
-    });
+    const existingDemo = await findAssistantByName("Marie Curie - Physics & Chemistry Expert");
 
     if (existingDemo) {
       return NextResponse.json({ 
@@ -58,21 +54,18 @@ This is designed as an educational experience for students to learn about your s
       name: demoName,
       instructions: demoInstructions,
       model: "gpt-4-turbo-preview",
-      tools: [{ type: "retrieval" }]
+      tools: [{ type: "file_search" as any }] // Using file_search instead of retrieval to fix TypeScript error
     });
 
-    // Store in database
-    const savedDemo = await prisma.assistant.create({
-      data: {
-        id: assistant.id,
-        name: demoName,
-        instructions: demoInstructions,
-        model: "gpt-4-turbo-preview",
-        accessCode: "demo123",
-        shareableUrl,
-        isPublic: true,
-        isDemo: true
-      }
+    // Store in localStorage
+    const savedDemo = await createAssistant({
+      id: assistant.id,
+      name: demoName,
+      instructions: demoInstructions,
+      model: "gpt-4-turbo-preview",
+      accessCode: "demo123",
+      shareableUrl,
+      isPublic: true
     });
 
     return NextResponse.json({ 

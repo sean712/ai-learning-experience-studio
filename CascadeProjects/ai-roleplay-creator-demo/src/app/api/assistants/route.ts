@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { getAllAssistants } from '@/lib/localStorage';
 
 export async function GET(req: NextRequest) {
   try {
-    // Fetch all assistants from the database with their files
-    const assistants = await prisma.assistant.findMany({
-      include: {
-        files: true
-      },
-      orderBy: {
-        createdAt: 'desc'
-      }
-    });
+    // Fetch all assistants from localStorage
+    const assistants = await getAllAssistants();
     
-    return NextResponse.json({ assistants });
+    // Sort by createdAt in descending order
+    const sortedAssistants = assistants.sort((a, b) => 
+      b.createdAt.getTime() - a.createdAt.getTime()
+    );
+    
+    return NextResponse.json({ assistants: sortedAssistants });
   } catch (error: any) {
     console.error('Error fetching assistants:', error);
     return NextResponse.json(

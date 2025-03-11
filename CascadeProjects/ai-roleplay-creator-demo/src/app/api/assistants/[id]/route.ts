@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import prisma from '@/lib/prisma';
+import { getAssistantById, updateAssistant, deleteAssistant } from '@/lib/localStorage';
 
 // Initialize the OpenAI client
 const openai = new OpenAI({
@@ -18,11 +18,8 @@ export async function GET(req: NextRequest, { params }: Params) {
   try {
     const { id } = params;
     
-    // Fetch the assistant from the database
-    const assistant = await prisma.assistant.findUnique({
-      where: { id },
-      include: { files: true }
-    });
+    // Fetch the assistant from localStorage
+    const assistant = await getAssistantById(id);
     
     if (!assistant) {
       return NextResponse.json(
@@ -46,11 +43,8 @@ export async function DELETE(req: NextRequest, { params }: Params) {
   try {
     const { id } = params;
     
-    // First check if the assistant exists in our database
-    const existingAssistant = await prisma.assistant.findUnique({
-      where: { id },
-      include: { files: true }
-    });
+    // First check if the assistant exists in localStorage
+    const existingAssistant = await getAssistantById(id);
     
     if (!existingAssistant) {
       return NextResponse.json(
@@ -68,10 +62,8 @@ export async function DELETE(req: NextRequest, { params }: Params) {
       // Continue with database deletion even if OpenAI deletion fails
     }
     
-    // Delete the assistant from our database (will cascade delete files)
-    await prisma.assistant.delete({
-      where: { id }
-    });
+    // Delete the assistant from localStorage
+    await deleteAssistant(id);
     
     return NextResponse.json({ 
       success: true,
@@ -100,10 +92,8 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       );
     }
     
-    // First check if the assistant exists in our database
-    const existingAssistant = await prisma.assistant.findUnique({
-      where: { id }
-    });
+    // First check if the assistant exists in localStorage
+    const existingAssistant = await getAssistantById(id);
     
     if (!existingAssistant) {
       return NextResponse.json(
@@ -123,17 +113,13 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       await openai.beta.assistants.update(id, openaiUpdateData);
     }
     
-    // Update the assistant in our database
-    const updatedAssistant = await prisma.assistant.update({
-      where: { id },
-      data: {
-        name: updates.name !== undefined ? updates.name : undefined,
-        instructions: updates.instructions !== undefined ? updates.instructions : undefined,
-        model: updates.model !== undefined ? updates.model : undefined,
-        accessCode: updates.accessCode !== undefined ? updates.accessCode : undefined,
-        isPublic: updates.isPublic !== undefined ? updates.isPublic : undefined,
-      },
-      include: { files: true }
+    // Update the assistant in localStorage
+    const updatedAssistant = await updateAssistant(id, {
+      name: updates.name !== undefined ? updates.name : undefined,
+      instructions: updates.instructions !== undefined ? updates.instructions : undefined,
+      model: updates.model !== undefined ? updates.model : undefined,
+      accessCode: updates.accessCode !== undefined ? updates.accessCode : undefined,
+      shareableUrl: updates.shareableUrl !== undefined ? updates.shareableUrl : undefined,
     });
     
     return NextResponse.json({ 

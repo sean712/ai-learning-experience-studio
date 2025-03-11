@@ -58,29 +58,25 @@ This project is configured for deployment on Netlify. Follow these steps to depl
 3. Select your GitHub repository
 4. Configure the build settings:
    - Base directory: `CascadeProjects/ai-roleplay-creator-demo`
-   - Build command: `npm install && npx prisma generate && npm run build`
+   - Build command: `npm install && npm run build`
    - Publish directory: `.next`
 5. Add environment variables:
    - Go to Site settings > Environment variables
    - Add `OPENAI_API_KEY` with your API key value
-   - Add `DATABASE_URL` with your PostgreSQL connection string
 6. Click "Deploy site"
 
 The application will be built and deployed to a Netlify URL. You can configure a custom domain in the Netlify settings if needed.
 
-### Database Setup for Netlify
+### Data Storage
 
-This application requires a PostgreSQL database for production deployment. You can use any PostgreSQL provider such as:
+This application uses browser localStorage for data persistence in the demo version. This means:
 
-- [Supabase](https://supabase.com/) (recommended)
-- [Neon](https://neon.tech/)
-- [Railway](https://railway.app/)
-- [Heroku Postgres](https://www.heroku.com/postgres)
+- All data is stored in the user's browser
+- Data will persist between sessions on the same device/browser
+- No database setup is required for deployment
+- This simplifies deployment but is not suitable for production use with real users
 
-After setting up your database, make sure to:
-
-1. Add the `DATABASE_URL` environment variable in your Netlify site settings
-2. The application will automatically run migrations during deployment
+If you need to implement a proper database for production, the codebase includes commented Prisma schema that can be re-enabled.
 
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 

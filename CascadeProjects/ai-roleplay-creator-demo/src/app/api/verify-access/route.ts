@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { getAssistantById } from '@/lib/localStorage';
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,10 +12,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Find the assistant in the database
-    const assistant = await prisma.assistant.findUnique({
-      where: { id: assistantId }
-    });
+    // Find the assistant in localStorage
+    const assistant = await getAssistantById(assistantId);
 
     if (!assistant) {
       return NextResponse.json(

@@ -1,13 +1,12 @@
 [build]
   base = "CascadeProjects/ai-roleplay-creator-demo"
-  command = "npm install && npx prisma generate && npm run build"
+  command = "npm install && npm run build"
   publish = ".next"
 
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
   NODE_VERSION = "20"
-  # Note: Set the actual DATABASE_URL in the Netlify UI
-  # DATABASE_URL = "postgresql://username:password@hostname:port/database"
+  # Only OPENAI_API_KEY is required for deployment
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

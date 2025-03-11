@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import prisma from '@/lib/prisma';
+import { createAssistant } from '@/lib/localStorage';
 import { nanoid } from 'nanoid';
 
 // Initialize the OpenAI client with the API key
@@ -74,30 +74,17 @@ export async function POST(req: NextRequest) {
     
     console.log('Assistant created successfully:', assistant.id);
     
-    // Store the assistant in the database with access code and shareable URL
-    const savedAssistant = await prisma.assistant.create({
-      data: {
-        id: assistant.id,
-        name,
-        instructions,
-        model: model || 'gpt-4-turbo-preview',
-        accessCode,
-        shareableUrl,
-        isPublic,
-        files: {
-          create: fileIds.map((fileId: string, index: number) => ({
-            id: fileId,
-            name: `File ${index + 1}`,
-            vectorStoreId: vectorStoreIds[index] || null
-          }))
-        }
-      },
-      include: {
-        files: true
-      }
+    // Store the assistant in localStorage with access code and shareable URL
+    const savedAssistant = await createAssistant({
+      id: assistant.id,
+      name,
+      instructions,
+      model: model || 'gpt-4-turbo-preview',
+      accessCode,
+      shareableUrl
     });
     
-    console.log('Assistant saved to database with shareable URL:', shareableUrl);
+    console.log('Assistant saved to localStorage with shareable URL:', shareableUrl);
 
     return NextResponse.json({
       assistant,
