@@ -13,7 +13,7 @@ export default function RoleplayForm() {
   const [persona, setPersona] = useState('');
   const [interactionInstructions, setInteractionInstructions] = useState('');
   const [knowledgeBaseInstructions, setKnowledgeBaseInstructions] = useState('');
-  const [model, setModel] = useState('gpt-4-turbo-preview');
+  const [model, setModel] = useState('gpt-4o');
   const [accessCode, setAccessCode] = useState('');
   const [isPublic, setIsPublic] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -220,6 +220,42 @@ ${knowledgeBaseInstructions}
         </p>
       </div>
       
+      <div>
+        <label htmlFor="interactionType" className="block text-sm font-medium mb-2">
+          Interaction Type
+        </label>
+        <select
+          id="interactionType"
+          value={interactionType}
+          onChange={(e) => setInteractionType(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+        >
+          <option value="roleplay">Roleplay Character</option>
+          <option value="discussion">Discussion Facilitator</option>
+          <option value="feedback">Feedback Coach</option>
+          <option value="tutor">Subject Tutor</option>
+          <option value="custom">Custom Interaction</option>
+        </select>
+        <div className="mt-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
+          <p className="font-medium mb-1">About this interaction type:</p>
+          {interactionType === 'roleplay' && (
+            <p>Creates an AI character that takes on a specific role or persona, allowing students to interact with a simulated expert, historical figure, or professional.</p>
+          )}
+          {interactionType === 'discussion' && (
+            <p>Creates an AI facilitator that guides educational discussions, asks thought-provoking questions, and helps students explore topics in depth.</p>
+          )}
+          {interactionType === 'feedback' && (
+            <p>Creates an AI coach that provides constructive feedback on student work, ideas, or practice, helping them improve their skills and understanding.</p>
+          )}
+          {interactionType === 'tutor' && (
+            <p>Creates an AI tutor specialized in a specific subject area, providing explanations, answering questions, and guiding students through learning materials.</p>
+          )}
+          {interactionType === 'custom' && (
+            <p>Creates a custom AI interaction designed for your specific teaching needs, with behavior defined by your detailed instructions.</p>
+          )}
+        </div>
+      </div>
+      
       <div className="space-y-4">
         <h3 className="text-md font-medium">AI Learning Experience Details</h3>
         
@@ -253,26 +289,7 @@ ${knowledgeBaseInstructions}
           />
         </div>
         
-        <div>
-          <label htmlFor="interactionType" className="block text-sm font-medium mb-2">
-            Interaction Type
-          </label>
-          <select
-            id="interactionType"
-            value={interactionType}
-            onChange={(e) => setInteractionType(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-          >
-            <option value="roleplay">Roleplay Character</option>
-            <option value="discussion">Discussion Facilitator</option>
-            <option value="feedback">Feedback Coach</option>
-            <option value="tutor">Subject Tutor</option>
-            <option value="custom">Custom Interaction</option>
-          </select>
-          <p className="mt-1 text-xs text-gray-500">
-            Select the type of learning interaction you want to create
-          </p>
-        </div>
+        {/* Interaction Type field moved to the top, after the title field */}
         
         {interactionType === 'roleplay' && (
           <div>
@@ -342,9 +359,9 @@ ${knowledgeBaseInstructions}
           onChange={(e) => setModel(e.target.value)}
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
         >
-          <option value="gpt-4-turbo-preview">GPT-4 Turbo (Recommended)</option>
-          <option value="gpt-4o">GPT-4o</option>
-          <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Faster)</option>
+          <option value="gpt-4o">GPT-4o (Recommended)</option>
+          <option value="gpt-4o-mini">GPT-4o-mini (Faster)</option>
+          <option value="o1">o1 (Most Capable)</option>
         </select>
       </div>
       
