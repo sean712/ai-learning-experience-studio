@@ -7,10 +7,9 @@ const nextConfig = {
     unoptimized: true,
   },
   reactStrictMode: true,
-  // Disable experimental features that might cause issues
+  // Configure experimental features properly
   experimental: {
-    turbo: false,
-    serverActions: true
+    // These need to be objects or removed entirely
   },
   // Ensure proper handling of API routes
   async rewrites() {
