@@ -10,3 +10,18 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Increase function timeout to handle longer-running operations
+[functions]
+  node_bundler = "esbuild"
+  # Increase timeout from default 10s to 26s (max for regular Netlify accounts)
+  timeout = "26"
+
+# Add debugging for Next.js
+[dev]
+  framework = "#static"
+  command = "npm run dev"
+  targetPort = 3000
+  port = 8888
+  publish = "public"
+  autoLaunch = true

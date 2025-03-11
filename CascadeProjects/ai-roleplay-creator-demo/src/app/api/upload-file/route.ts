@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
 import { getVectorStoreId, createVectorStore, addFileToVectorStore } from '@/utils/vectorStoreManager';
 
 // Initialize the OpenAI client with the API key
@@ -14,7 +11,7 @@ const openai = new OpenAI({
 export const dynamic = 'force-dynamic';
 
 // Set a longer timeout for this route to handle large file uploads
-export const maxDuration = 120; // 120 seconds - doubled to handle larger files
+export const maxDuration = 25; // 25 seconds - just under Netlify's 26s limit
 
 // Configure the route to handle larger payloads
 export const fetchCache = 'force-no-store';
@@ -70,21 +67,11 @@ export async function POST(req: NextRequest) {
       // Set a longer timeout for the OpenAI API call
       const uploadStartTime = Date.now();
       
-      // Create a temporary file to use with createReadStream
-      // We need to save the file to disk temporarily since we can't directly create a stream from the FormData file
-      const tempFilePath = `/tmp/${Date.now()}-${file.name}`;
-      
-      // Convert the file to a Buffer and write to disk
+      // Convert the file to a Buffer - no need to write to disk in serverless environment
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       
-      // Import fs module
-      const fs = require('fs');
-      
-      // Write the buffer to a temporary file
-      fs.writeFileSync(tempFilePath, buffer);
-      
-      console.log(`Created temporary file at ${tempFilePath}`);
+      console.log(`File converted to buffer, size: ${buffer.length} bytes`);
       
       // Use our vector store manager
       
@@ -98,11 +85,8 @@ export async function POST(req: NextRequest) {
       // Upload the file directly from the buffer instead of a stream
       console.log(`Uploading file ${file.name} to OpenAI`);
       
-      // First, read the file as a Buffer
-      const fileBuffer = fs.readFileSync(tempFilePath);
-      
-      // Create a File object that OpenAI's toFile can use
-      const fileBlob = new Blob([fileBuffer], { type: file.type || 'application/octet-stream' });
+      // Create a File object that OpenAI's toFile can use directly from our buffer
+      const fileBlob = new Blob([buffer], { type: file.type || 'application/octet-stream' });
       
       try {
         // Import toFile from openai
@@ -136,9 +120,7 @@ export async function POST(req: NextRequest) {
             fileBatchId: fileBatch.id
           };
           
-          // Clean up the temporary file
-          fs.unlinkSync(tempFilePath);
-          console.log(`Removed temporary file ${tempFilePath}`);
+          // No temporary file to clean up in this implementation
           
           return NextResponse.json({ file: responseData });
         } catch (vectorStoreError: any) {
@@ -157,11 +139,7 @@ export async function POST(req: NextRequest) {
         );
       }
       
-      const uploadDuration = (Date.now() - uploadStartTime) / 1000;
-      console.log(`OpenAI upload completed in ${uploadDuration.toFixed(2)} seconds`);
-
-      console.log(`File uploaded successfully: ${file.name}, id: ${uploadedFile.id}, vectorStoreId: ${vectorStoreId}`);
-      return NextResponse.json({ file: responseData });
+      // This code is unreachable - it's after the try/catch block that already returns
     } catch (openaiError: any) {
       console.error('OpenAI API error:', openaiError);
       return NextResponse.json(
