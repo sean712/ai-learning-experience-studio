@@ -78,6 +78,14 @@ function ChatPageContent() {
           <Link 
             href="/"
             className="text-blue-500 hover:text-blue-700 flex items-center"
+            prefetch={false}
+            onClick={(e) => {
+              // For better compatibility with Windsurf
+              if (typeof window !== 'undefined') {
+                e.preventDefault();
+                window.location.href = '/';
+              }
+            }}
           >
             <span className="mr-1">←</span> Back to Home
           </Link>
@@ -86,6 +94,14 @@ function ChatPageContent() {
             <Link 
               href="/create"
               className="text-blue-500 hover:text-blue-700"
+              prefetch={false}
+              onClick={(e) => {
+                // For better compatibility with Windsurf
+                if (typeof window !== 'undefined') {
+                  e.preventDefault();
+                  window.location.href = '/create';
+                }
+              }}
             >
               Create New Assistant
             </Link>
@@ -105,6 +121,14 @@ function ChatPageContent() {
               <Link 
                 href="/chat?assistantId=example-medieval-knight"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                prefetch={false}
+                onClick={(e) => {
+                  // For better compatibility with Windsurf
+                  if (typeof window !== 'undefined') {
+                    e.preventDefault();
+                    window.location.href = '/chat?assistantId=example-medieval-knight';
+                  }
+                }}
               >
                 <h3 className="font-medium mb-1">Medieval Knight</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -115,6 +139,14 @@ function ChatPageContent() {
               <Link 
                 href="/chat?assistantId=example-sci-fi-explorer"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                prefetch={false}
+                onClick={(e) => {
+                  // For better compatibility with Windsurf
+                  if (typeof window !== 'undefined') {
+                    e.preventDefault();
+                    window.location.href = '/chat?assistantId=example-sci-fi-explorer';
+                  }
+                }}
               >
                 <h3 className="font-medium mb-1">Sci-Fi Explorer</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -125,6 +157,14 @@ function ChatPageContent() {
               <Link 
                 href="/chat?assistantId=example-detective"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                prefetch={false}
+                onClick={(e) => {
+                  // For better compatibility with Windsurf
+                  if (typeof window !== 'undefined') {
+                    e.preventDefault();
+                    window.location.href = '/chat?assistantId=example-detective';
+                  }
+                }}
               >
                 <h3 className="font-medium mb-1">Detective</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -135,6 +175,14 @@ function ChatPageContent() {
               <Link 
                 href="/chat?assistantId=example-fantasy-wizard"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                prefetch={false}
+                onClick={(e) => {
+                  // For better compatibility with Windsurf
+                  if (typeof window !== 'undefined') {
+                    e.preventDefault();
+                    window.location.href = '/chat?assistantId=example-fantasy-wizard';
+                  }
+                }}
               >
                 <h3 className="font-medium mb-1">Fantasy Wizard</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -147,6 +195,14 @@ function ChatPageContent() {
               <Link 
                 href="/create"
                 className="inline-block py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg"
+                prefetch={false}
+                onClick={(e) => {
+                  // For better compatibility with Windsurf
+                  if (typeof window !== 'undefined') {
+                    e.preventDefault();
+                    window.location.href = '/create';
+                  }
+                }}
               >
                 Create Your Own Assistant
               </Link>
@@ -167,6 +223,14 @@ function ChatPageContent() {
                 <Link 
                   href={`/chat?assistantId=${assistantId}`}
                   className="text-sm text-blue-500 hover:text-blue-700"
+                  prefetch={false}
+                  onClick={(e) => {
+                    // For better compatibility with Windsurf
+                    if (typeof window !== 'undefined') {
+                      e.preventDefault();
+                      window.location.href = `/chat?assistantId=${assistantId}`;
+                    }
+                  }}
                 >
                   New Chat
                 </Link>
@@ -180,6 +244,14 @@ function ChatPageContent() {
                   <Link 
                     href="/"
                     className="text-blue-500 hover:text-blue-700"
+                    prefetch={false}
+                    onClick={(e) => {
+                      // For better compatibility with Windsurf
+                      if (typeof window !== 'undefined') {
+                        e.preventDefault();
+                        window.location.href = '/';
+                      }
+                    }}
                   >
                     Go back home
                   </Link>
