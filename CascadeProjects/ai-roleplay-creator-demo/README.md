@@ -1,6 +1,6 @@
 # AI Learning Experience Studio
 
-This project allows faculty at Imperial College Business School to create custom AI learning experiences with various interaction types using the OpenAI Assistants API and the Vercel AI SDK. Developed by the IDEA Lab, it supports roleplay characters, discussion facilitators, feedback coaches, and subject tutors.
+This project allows faculty at Imperial College Business School to create custom AI learning experiences with various interaction types using the OpenAI Assistants API and the Next.js AI SDK. Developed by the IDEA Lab, it supports roleplay characters, discussion facilitators, feedback coaches, and subject tutors.
 
 ## Features
 
@@ -49,27 +49,25 @@ yarn dev
 pnpm dev
 ```
 
+## Deployment on Netlify
+
+This project is configured for deployment on Netlify. Follow these steps to deploy:
+
+1. Push your code to a GitHub repository
+2. Log in to Netlify and click "New site from Git"
+3. Select your GitHub repository
+4. Configure the build settings:
+   - Base directory: `CascadeProjects/ai-roleplay-creator-demo`
+   - Build command: `npm install && npm run build`
+   - Publish directory: `.next`
+5. Add environment variables:
+   - Go to Site settings > Environment variables
+   - Add `OPENAI_API_KEY` with your API key value
+6. Click "Deploy site"
+
+The application will be built and deployed to a Netlify URL. You can configure a custom domain in the Netlify settings if needed.
+
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
-
-## Deploying to Replit
-
-This project includes special configuration for easy deployment on Replit:
-
-1. Import the GitHub repository into Replit
-2. When asked for a run command, simply click "Run"
-3. The included `replit-setup.sh` script will automatically:
-   - Find the project files (even if they're in a subdirectory)
-   - Move them to the correct location
-   - Install dependencies
-   - Start the development server
-
-### Troubleshooting Replit Deployment
-
-If you encounter 404 errors when navigating between pages:
-
-- The application uses trailing slashes for all URLs (e.g., `/demo/` instead of `/demo`)
-- The custom middleware will automatically redirect paths without trailing slashes
-- If you still encounter issues, try navigating to the homepage and using the sidebar navigation
 
 ## Project Structure
 
@@ -92,16 +90,12 @@ If you encounter 404 errors when navigating between pages:
 ## Technologies Used
 
 - [Next.js](https://nextjs.org/) - React framework
-- [Vercel AI SDK](https://sdk.vercel.ai/docs) - Tools for building AI-powered applications
+- [Next.js AI SDK](https://sdk.vercel.ai/docs) - Tools for building AI-powered applications
 - [OpenAI Assistants API](https://platform.openai.com/docs/assistants/overview) - For creating and managing AI assistants
 - [Tailwind CSS](https://tailwindcss.com/) - For styling
 
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)
-- [Vercel AI SDK Documentation](https://sdk.vercel.ai/docs)
+- [Next.js AI SDK Documentation](https://sdk.vercel.ai/docs)
 - [OpenAI API Documentation](https://platform.openai.com/docs/introduction)
-
-## Deployment
-
-This application can be deployed on Vercel or any other platform that supports Next.js applications.

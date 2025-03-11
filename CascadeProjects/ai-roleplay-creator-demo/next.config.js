@@ -1,16 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Use standalone output for better performance
   output: 'standalone',
-  trailingSlash: true,
+  
+  // Image optimization settings
   images: {
     domains: ['localhost'],
     unoptimized: true,
   },
+  
+  // Enable React strict mode for better development experience
   reactStrictMode: true,
-  // Configure experimental features properly
-  experimental: {
-    // These need to be objects or removed entirely
-  },
+  
   // Ensure proper handling of API routes
   async rewrites() {
     return [
