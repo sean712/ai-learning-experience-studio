@@ -4,9 +4,23 @@ const nextConfig = {
   trailingSlash: true,
   images: {
     domains: ['localhost'],
-    unoptimized: process.env.NODE_ENV !== 'production',
+    unoptimized: true,
   },
   reactStrictMode: true,
+  // Disable experimental features that might cause issues
+  experimental: {
+    turbo: false,
+    serverActions: true
+  },
+  // Ensure proper handling of API routes
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: '/api/:path*',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
