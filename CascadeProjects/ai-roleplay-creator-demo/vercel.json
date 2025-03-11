@@ -1,8 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
+  "buildCommand": "cd CascadeProjects/ai-roleplay-creator-demo && npm install && npm run build",
+  "outputDirectory": "CascadeProjects/ai-roleplay-creator-demo/.next",
+  "devCommand": "cd CascadeProjects/ai-roleplay-creator-demo && npm run dev",
+  "installCommand": "cd CascadeProjects/ai-roleplay-creator-demo && npm install",
   "framework": "nextjs",
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
