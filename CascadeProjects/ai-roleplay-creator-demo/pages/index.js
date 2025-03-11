@@ -1,8 +1,16 @@
 import React from 'react';
+import Head from 'next/head';
 import Link from 'next/link';
 
 export default function Home() {
   return (
+    <>
+      <Head>
+        <title>AI Learning Experience Studio | Imperial College Business School</title>
+        <meta name="description" content="Create custom AI learning experiences for education" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
     <div style={{ 
       fontFamily: 'Arial, sans-serif', 
       maxWidth: '800px', 
@@ -10,7 +18,18 @@ export default function Home() {
       padding: '20px', 
       lineHeight: '1.6' 
     }}>
-      <h1 style={{ color: '#0070f3' }}>AI Learning Experience Studio</h1>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+        <div style={{ marginRight: '20px' }}>
+          <img 
+            src="/idea-lab-logo.svg" 
+            alt="IDEA Lab Logo" 
+            width={80} 
+            height={80} 
+            style={{ display: 'block' }}
+          />
+        </div>
+        <h1 style={{ color: '#0070f3', margin: 0 }}>AI Learning Experience Studio</h1>
+      </div>
       
       <div style={{ 
         border: '1px solid #eaeaea', 
@@ -60,5 +79,6 @@ export default function Home() {
         </ul>
       </div>
     </div>
+    </>
   );
 }
