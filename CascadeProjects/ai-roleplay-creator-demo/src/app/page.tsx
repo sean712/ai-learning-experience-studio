@@ -13,7 +13,7 @@ export default function Home() {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-            AI Learning Experience Studio
+            IDEA Lab AI Studio
           </h1>
           
           <p className="text-xl mb-3 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">

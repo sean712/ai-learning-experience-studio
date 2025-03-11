@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Learning Experience Studio | Imperial College Business School",
+  title: "IDEA Lab AI Studio | Imperial College Business School",
   description: "Create immersive educational experiences with AI-powered learning interactions for Imperial College Business School faculty",
 };
 

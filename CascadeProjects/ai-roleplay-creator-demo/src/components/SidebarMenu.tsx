@@ -75,7 +75,7 @@ export default function SidebarMenu() {
           
           {!isCollapsed && (
             <div className="px-4 py-2 bg-[#f8f8f8] dark:bg-[#2a2a2a] text-[#003E74] text-xs font-medium">
-              AI Learning Experience Studio
+              IDEA Lab AI Studio
             </div>
           )}
           <button
