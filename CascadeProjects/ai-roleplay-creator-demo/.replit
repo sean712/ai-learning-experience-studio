@@ -1,4 +1,4 @@
-run = "npm run dev"
+run = "bash replit-setup.sh"
 entrypoint = "src/app/page.tsx"
 
 hidden = [".build", ".config"]

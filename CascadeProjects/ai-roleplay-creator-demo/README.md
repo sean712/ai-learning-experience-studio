@@ -1,13 +1,15 @@
-# AI Roleplay Creator Demo
+# AI Learning Experience Studio
 
-This project allows you to create custom AI assistants with unique personalities and knowledge bases using the OpenAI Assistants API and the Vercel AI SDK.
+This project allows faculty at Imperial College Business School to create custom AI learning experiences with various interaction types using the OpenAI Assistants API and the Vercel AI SDK. Developed by the IDEA Lab, it supports roleplay characters, discussion facilitators, feedback coaches, and subject tutors.
 
 ## Features
 
-- Create custom AI assistants with specific personalities and roles
-- Upload files to give your assistants specialized knowledge
-- Chat with your assistants in real-time
-- Pre-built example assistants to try out
+- Create custom AI learning experiences with various interaction types
+- Upload files to provide curriculum-aligned knowledge
+- Structured input fields for educational purpose, context, persona, and instructions
+- Imperial College Business School branding throughout
+- Pre-built examples to demonstrate capabilities
+- Manage and share experiences with students
 
 ## Prerequisites
 
@@ -48,6 +50,26 @@ pnpm dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+
+## Deploying to Replit
+
+This project includes special configuration for easy deployment on Replit:
+
+1. Import the GitHub repository into Replit
+2. When asked for a run command, simply click "Run"
+3. The included `replit-setup.sh` script will automatically:
+   - Find the project files (even if they're in a subdirectory)
+   - Move them to the correct location
+   - Install dependencies
+   - Start the development server
+
+### Troubleshooting Replit Deployment
+
+If you encounter 404 errors when navigating between pages:
+
+- The application uses trailing slashes for all URLs (e.g., `/demo/` instead of `/demo`)
+- The custom middleware will automatically redirect paths without trailing slashes
+- If you still encounter issues, try navigating to the homepage and using the sidebar navigation
 
 ## Project Structure
 
