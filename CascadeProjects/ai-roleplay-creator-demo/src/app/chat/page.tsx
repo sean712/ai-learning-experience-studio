@@ -1,11 +1,35 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import AssistantChat from '@/components/AssistantChat';
 
-export default function ChatPage() {
+// Loading fallback for Suspense
+function ChatPageLoading() {
+  return (
+    <div className="min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 text-center">
+          <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mx-auto mb-6"></div>
+          <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mx-auto mb-4"></div>
+          <div className="h-4 w-2/3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mx-auto mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div className="h-5 w-24 bg-gray-200 dark:bg-gray-600 rounded animate-pulse mb-2"></div>
+                <div className="h-3 w-full bg-gray-200 dark:bg-gray-600 rounded animate-pulse"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Client Component that uses useSearchParams
+function ChatPageContent() {
   const searchParams = useSearchParams();
   const assistantId = searchParams.get('assistantId');
   const threadId = searchParams.get('threadId');
@@ -38,7 +62,7 @@ export default function ChatPage() {
     
     fetchAssistantDetails();
   }, [assistantId]);
-  
+
   return (
     <div className="min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]">
       <div className="max-w-4xl mx-auto">
@@ -163,5 +187,14 @@ export default function ChatPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<ChatPageLoading />}>
+      <ChatPageContent />
+    </Suspense>
   );
 }
