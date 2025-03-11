@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import OpenAI from 'openai';
 
 // Initialize the OpenAI client with the API key
@@ -7,14 +5,8 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
 });
 
-// Path to store vector store ID
-const VECTOR_STORE_PATH = path.join(process.cwd(), 'data');
-const VECTOR_STORE_FILE = path.join(VECTOR_STORE_PATH, 'vectorStore.json');
-
-// Ensure the data directory exists
-if (!fs.existsSync(VECTOR_STORE_PATH)) {
-  fs.mkdirSync(VECTOR_STORE_PATH, { recursive: true });
-}
+// In-memory cache for development environments
+let inMemoryVectorStore: VectorStoreData | null = null;
 
 // Interface for our vector store data
 interface VectorStoreData {
@@ -23,8 +15,13 @@ interface VectorStoreData {
   createdAt: string;
 }
 
+// Helper to determine if we're in a serverless environment like Netlify
+const isServerlessEnvironment = () => {
+  return process.env.NETLIFY || process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+};
+
 /**
- * Gets the current vector store ID from file or environment variable
+ * Gets the current vector store ID from environment variable or in-memory cache
  */
 export async function getVectorStoreId(): Promise<string | null> {
   // First check if we have a vector store ID in the environment
@@ -32,14 +29,9 @@ export async function getVectorStoreId(): Promise<string | null> {
     return process.env.OPENAI_VECTOR_STORE_ID;
   }
   
-  // Then check if we have one stored in a file
-  try {
-    if (fs.existsSync(VECTOR_STORE_FILE)) {
-      const data = JSON.parse(fs.readFileSync(VECTOR_STORE_FILE, 'utf-8'));
-      return data.id || null;
-    }
-  } catch (error) {
-    console.error('Error reading vector store ID from file:', error);
+  // Then check if we have one in memory (for development)
+  if (inMemoryVectorStore) {
+    return inMemoryVectorStore.id;
   }
   
   return null;
@@ -57,14 +49,18 @@ export async function createVectorStore(name: string = 'AI Roleplay Knowledge Ba
       expires_after: { anchor: 'last_active_at', days: 30 }
     });
     
-    // Save the vector store ID to file
+    // Create data object
     const data: VectorStoreData = {
       id: vectorStore.id,
       name: vectorStore.name,
       createdAt: new Date().toISOString()
     };
     
-    fs.writeFileSync(VECTOR_STORE_FILE, JSON.stringify(data, null, 2));
+    // Store in memory for development environments
+    inMemoryVectorStore = data;
+    
+    // Log the vector store ID for debugging
+    console.log(`Created vector store: ${vectorStore.id} (${name})`);
     
     return vectorStore.id;
   } catch (error) {
