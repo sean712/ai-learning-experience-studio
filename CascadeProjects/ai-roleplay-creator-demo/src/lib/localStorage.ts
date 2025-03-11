@@ -16,12 +16,26 @@ export type LocalAssistant = {
 // Key for storing assistants in localStorage
 const ASSISTANTS_KEY = 'ai-learning-experience-assistants';
 
+// Create a simple in-memory storage for server-side
+let serverAssistants: LocalAssistant[] = [];
+
+// Mock storage for server-side rendering
+const serverStorage = {
+  getItem: () => {
+    return JSON.stringify(serverAssistants);
+  },
+  setItem: (_key: string, value: string) => {
+    serverAssistants = JSON.parse(value);
+  }
+};
+
 // Helper to safely access localStorage (only on client)
 const getLocalStorage = () => {
   if (typeof window !== 'undefined') {
     return window.localStorage;
   }
-  return null;
+  // Return the mock storage for server-side rendering
+  return serverStorage;
 };
 
 // Get all assistants
@@ -123,15 +137,5 @@ export const findAssistantByName = async (name: string): Promise<LocalAssistant 
 
 // Server-side helper for API routes
 export const getServerStorage = () => {
-  // Create a simple in-memory storage for server-side
-  let serverAssistants: LocalAssistant[] = [];
-  
-  return {
-    getItem: () => {
-      return JSON.stringify(serverAssistants);
-    },
-    setItem: (_key: string, value: string) => {
-      serverAssistants = JSON.parse(value);
-    }
-  };
+  return serverStorage;
 };

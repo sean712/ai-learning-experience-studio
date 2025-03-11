@@ -45,13 +45,21 @@ function ChatPageContent() {
     const fetchAssistantDetails = async () => {
       setIsLoading(true);
       try {
-        // This would be a real API call in a production app
-        // For demo purposes, we're just simulating a delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // In a real app, you would fetch the assistant details from OpenAI
-        // For now, we'll just use the assistant ID as the name
-        setAssistantName(`Assistant ${assistantId.slice(0, 8)}`);
+        // For demo purposes, handle example assistants specially
+        if (assistantId.startsWith('example-')) {
+          // Extract a readable name from the example ID
+          const readableName = assistantId
+            .replace('example-', '')
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+          
+          setAssistantName(readableName);
+        } else {
+          // In a real app, you would fetch the assistant details from localStorage or API
+          // For now, we'll just use the assistant ID as the name
+          setAssistantName(`Assistant ${assistantId.slice(0, 8)}`);
+        }
       } catch (err: any) {
         console.error('Error fetching assistant details:', err);
         setError(err.message || 'Failed to load assistant details');

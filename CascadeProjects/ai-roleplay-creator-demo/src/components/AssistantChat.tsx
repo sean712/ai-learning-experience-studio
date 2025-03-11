@@ -17,7 +17,18 @@ export default function AssistantChat({
   const [threadId, setThreadId] = useState<string | null>(initialThreadId || null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Initialize the assistant chat
+  // State for handling demo mode
+  const [demoMode, setDemoMode] = useState(false);
+  
+  // Check if we're in demo mode (no API key)
+  useEffect(() => {
+    // For example assistants, always use demo mode
+    if (assistantId?.startsWith('example-')) {
+      setDemoMode(true);
+    }
+  }, [assistantId]);
+
+  // Initialize the assistant chat with basic options to avoid TypeScript errors
   const { 
     status, 
     messages, 
@@ -31,18 +42,31 @@ export default function AssistantChat({
       assistantId,
       threadId,
       fileIds
-    },
-    onResponse: (response) => {
-      // Extract threadId from the response
-      const threadIdFromResponse = response.threadId;
-      if (threadIdFromResponse && threadIdFromResponse !== threadId) {
-        setThreadId(threadIdFromResponse);
-      }
-    },
-    onError: (error) => {
-      console.error('Error in assistant chat:', error);
     }
   });
+  
+  // Handle threadId updates from response data
+  useEffect(() => {
+    // Look for data messages that contain threadId
+    const dataMessage = messages.find(m => 
+      m.role === 'data' && 
+      (m.data as any)?.threadId && 
+      (m.data as any).threadId !== threadId
+    );
+    
+    if (dataMessage) {
+      const newThreadId = (dataMessage.data as any).threadId;
+      setThreadId(newThreadId);
+    }
+  }, [messages, threadId]);
+  
+  // Handle API key errors
+  useEffect(() => {
+    if (error?.message?.includes('API key')) {
+      setDemoMode(true);
+      console.error('Error in assistant chat:', error);
+    }
+  }, [error]);
 
   // Scroll to bottom when messages change
   useEffect(() => {
