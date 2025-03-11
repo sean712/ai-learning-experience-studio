@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Message, useAssistant } from '@ai-sdk/react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface AssistantChatProps {
   assistantId?: string;
@@ -125,7 +127,15 @@ export default function AssistantChat({
                     </pre>
                   </div>
                 ) : (
-                  <div>{message.content}</div>
+                  <div className="markdown-content">
+                    {message.role === 'assistant' ? (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {message.content}
+                      </ReactMarkdown>
+                    ) : (
+                      <div>{message.content}</div>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
