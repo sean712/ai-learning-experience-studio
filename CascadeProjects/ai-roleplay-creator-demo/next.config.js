@@ -24,6 +24,12 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   
+  // Improve client-side navigation compatibility
+  experimental: {
+    // Disable scroll restoration for better compatibility
+    scrollRestoration: false,
+  },
+  
   // Ensure proper handling of API routes
   async rewrites() {
     return [

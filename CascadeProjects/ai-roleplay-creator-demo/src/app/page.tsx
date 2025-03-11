@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import CustomLink from "@/components/CustomLink";
 
 export default function Home() {
   return (
@@ -26,7 +26,7 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-            <Link 
+            <CustomLink 
               href="/demo/"
               className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-lg hover:from-purple-700 hover:to-blue-600 transition-all font-medium shadow-lg hover:shadow-xl flex items-center">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -34,18 +34,18 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               Try Demo
-            </Link>
+            </CustomLink>
             
-            <Link 
+            <CustomLink 
               href="/create/"
               className="px-6 py-3 bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all font-medium">
               Create Learning Experience
-            </Link>
+            </CustomLink>
           </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-          <Link 
+          <CustomLink 
             href="/create/"
             className="group p-8 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700"
           >
@@ -58,9 +58,9 @@ export default function Home() {
             <p className="text-gray-600 dark:text-gray-300">
               Design interactive learning experiences with AI as a roleplay character, discussion partner, feedback coach, or learning facilitator.
             </p>
-          </Link>
+          </CustomLink>
           
-          <Link 
+          <CustomLink 
             href="/manage/"
             className="group p-8 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700"
           >
@@ -73,7 +73,7 @@ export default function Home() {
             <p className="text-gray-600 dark:text-gray-300">
               View, edit, and share your AI learning experiences with your students using secure access codes.
             </p>
-          </Link>
+          </CustomLink>
         </div>
         
         <div className="mt-16 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-800">
@@ -144,7 +144,7 @@ export default function Home() {
           <h3 className="text-2xl font-bold mb-4">Ready to Transform Your Teaching?</h3>
           <p className="text-lg mb-6">Create engaging, personalized AI learning experiences in multiple formats that your students will love.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link 
+            <CustomLink 
               href="/demo" 
               className="px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium flex items-center"
             >
@@ -153,13 +153,13 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               Try Demo
-            </Link>
-            <Link 
+            </CustomLink>
+            <CustomLink 
               href="/create" 
               className="px-6 py-3 bg-white/20 border border-white text-white rounded-lg hover:bg-white/30 transition-colors font-medium"
             >
               Create Your First Experience
-            </Link>
+            </CustomLink>
           </div>
         </div>
         

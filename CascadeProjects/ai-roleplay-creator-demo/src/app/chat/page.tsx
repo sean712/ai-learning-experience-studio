@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import CustomLink from '@/components/CustomLink';
 import AssistantChat from '@/components/AssistantChat';
 
 // Loading fallback for Suspense
@@ -75,36 +75,20 @@ function ChatPageContent() {
     <div className="min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)]">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6 flex items-center justify-between">
-          <Link 
+          <CustomLink 
             href="/"
             className="text-blue-500 hover:text-blue-700 flex items-center"
-            prefetch={false}
-            onClick={(e) => {
-              // For better compatibility with Windsurf
-              if (typeof window !== 'undefined') {
-                e.preventDefault();
-                window.location.href = '/';
-              }
-            }}
           >
             <span className="mr-1">←</span> Back to Home
-          </Link>
+          </CustomLink>
           
           {assistantId && (
-            <Link 
+            <CustomLink 
               href="/create"
               className="text-blue-500 hover:text-blue-700"
-              prefetch={false}
-              onClick={(e) => {
-                // For better compatibility with Windsurf
-                if (typeof window !== 'undefined') {
-                  e.preventDefault();
-                  window.location.href = '/create';
-                }
-              }}
             >
               Create New Assistant
-            </Link>
+            </CustomLink>
           )}
         </div>
         
@@ -118,94 +102,54 @@ function ChatPageContent() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* These would be real assistant IDs in a production app */}
-              <Link 
+              <CustomLink 
                 href="/chat?assistantId=example-medieval-knight"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                prefetch={false}
-                onClick={(e) => {
-                  // For better compatibility with Windsurf
-                  if (typeof window !== 'undefined') {
-                    e.preventDefault();
-                    window.location.href = '/chat?assistantId=example-medieval-knight';
-                  }
-                }}
               >
                 <h3 className="font-medium mb-1">Medieval Knight</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   A chivalrous knight from the Middle Ages
                 </p>
-              </Link>
+              </CustomLink>
               
-              <Link 
+              <CustomLink 
                 href="/chat?assistantId=example-sci-fi-explorer"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                prefetch={false}
-                onClick={(e) => {
-                  // For better compatibility with Windsurf
-                  if (typeof window !== 'undefined') {
-                    e.preventDefault();
-                    window.location.href = '/chat?assistantId=example-sci-fi-explorer';
-                  }
-                }}
               >
                 <h3 className="font-medium mb-1">Sci-Fi Explorer</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   A space explorer from the distant future
                 </p>
-              </Link>
+              </CustomLink>
               
-              <Link 
+              <CustomLink 
                 href="/chat?assistantId=example-detective"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                prefetch={false}
-                onClick={(e) => {
-                  // For better compatibility with Windsurf
-                  if (typeof window !== 'undefined') {
-                    e.preventDefault();
-                    window.location.href = '/chat?assistantId=example-detective';
-                  }
-                }}
               >
                 <h3 className="font-medium mb-1">Detective</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   A sharp-witted detective solving mysteries
                 </p>
-              </Link>
+              </CustomLink>
               
-              <Link 
+              <CustomLink 
                 href="/chat?assistantId=example-fantasy-wizard"
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                prefetch={false}
-                onClick={(e) => {
-                  // For better compatibility with Windsurf
-                  if (typeof window !== 'undefined') {
-                    e.preventDefault();
-                    window.location.href = '/chat?assistantId=example-fantasy-wizard';
-                  }
-                }}
               >
                 <h3 className="font-medium mb-1">Fantasy Wizard</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   A wise and powerful magic user
                 </p>
-              </Link>
+              </CustomLink>
             </div>
             
             <div className="mt-8">
-              <Link 
+              <CustomLink 
                 href="/create"
                 className="inline-block py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg"
-                prefetch={false}
-                onClick={(e) => {
-                  // For better compatibility with Windsurf
-                  if (typeof window !== 'undefined') {
-                    e.preventDefault();
-                    window.location.href = '/create';
-                  }
-                }}
               >
                 Create Your Own Assistant
-              </Link>
+              </CustomLink>
             </div>
           </div>
         ) : (
@@ -220,20 +164,12 @@ function ChatPageContent() {
               </h1>
               
               {threadId && (
-                <Link 
+                <CustomLink 
                   href={`/chat?assistantId=${assistantId}`}
                   className="text-sm text-blue-500 hover:text-blue-700"
-                  prefetch={false}
-                  onClick={(e) => {
-                    // For better compatibility with Windsurf
-                    if (typeof window !== 'undefined') {
-                      e.preventDefault();
-                      window.location.href = `/chat?assistantId=${assistantId}`;
-                    }
-                  }}
                 >
                   New Chat
-                </Link>
+                </CustomLink>
               )}
             </div>
             
@@ -241,20 +177,12 @@ function ChatPageContent() {
               {error ? (
                 <div className="p-8 text-center">
                   <p className="text-red-500 mb-4">{error}</p>
-                  <Link 
+                  <CustomLink 
                     href="/"
                     className="text-blue-500 hover:text-blue-700"
-                    prefetch={false}
-                    onClick={(e) => {
-                      // For better compatibility with Windsurf
-                      if (typeof window !== 'undefined') {
-                        e.preventDefault();
-                        window.location.href = '/';
-                      }
-                    }}
                   >
                     Go back home
-                  </Link>
+                  </CustomLink>
                 </div>
               ) : (
                 <AssistantChat 
