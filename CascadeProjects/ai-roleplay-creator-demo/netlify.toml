@@ -15,7 +15,10 @@
 [functions]
   node_bundler = "esbuild"
   # Increase timeout from default 10s to 26s (max for regular Netlify accounts)
-  timeout = "26"
+  included_files = ["**/*"]
+
+[build.environment]
+  AWS_LAMBDA_FUNCTION_TIMEOUT = "26"
 
 # Add debugging for Next.js
 [dev]
