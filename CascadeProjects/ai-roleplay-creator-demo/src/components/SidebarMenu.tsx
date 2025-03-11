@@ -1,15 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function SidebarMenu() {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
+  const router = useRouter();
 
   const isActive = (path: string) => {
-    return pathname === path || pathname.startsWith(path);
+    // Handle both with and without trailing slashes for better compatibility
+    const currentPath = pathname.endsWith('/') ? pathname : `${pathname}/`;
+    const checkPath = path.endsWith('/') ? path : `${path}/`;
+    return currentPath === checkPath || currentPath.startsWith(checkPath);
+  };
+  
+  // Handle navigation with proper error handling
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault();
+    setIsCollapsed(true);
+    router.push(path);
   };
 
   return (
@@ -89,8 +100,8 @@ export default function SidebarMenu() {
           <ul className="space-y-2">
             <li>
               <Link
-                href="/demo"
-                onClick={() => setIsCollapsed(true)}
+                href="/demo/"
+                onClick={(e) => handleNavigation(e, '/demo/')}
                 className={`flex items-center p-3 rounded-lg transition-colors ${
                   isActive('/demo')
                     ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
@@ -106,8 +117,8 @@ export default function SidebarMenu() {
             </li>
             <li>
               <Link
-                href="/create"
-                onClick={() => setIsCollapsed(true)}
+                href="/create/"
+                onClick={(e) => handleNavigation(e, '/create/')}
                 className={`flex items-center p-3 rounded-lg transition-colors ${
                   isActive('/create')
                     ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
@@ -123,8 +134,8 @@ export default function SidebarMenu() {
             </li>
             <li>
               <Link
-                href="/manage"
-                onClick={() => setIsCollapsed(true)}
+                href="/manage/"
+                onClick={(e) => handleNavigation(e, '/manage/')}
                 className={`flex items-center p-3 rounded-lg transition-colors ${
                   isActive('/manage')
                     ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
@@ -143,8 +154,8 @@ export default function SidebarMenu() {
             </li>
             <li>
               <Link
-                href="/faq"
-                onClick={() => setIsCollapsed(true)}
+                href="/faq/"
+                onClick={(e) => handleNavigation(e, '/faq/')}
                 className={`flex items-center p-3 rounded-lg transition-colors ${
                   isActive('/faq')
                     ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'

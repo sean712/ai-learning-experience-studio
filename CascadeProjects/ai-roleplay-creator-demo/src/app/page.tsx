@@ -27,7 +27,7 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
             <Link 
-              href="/demo"
+              href="/demo/"
               className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-lg hover:from-purple-700 hover:to-blue-600 transition-all font-medium shadow-lg hover:shadow-xl flex items-center">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -37,7 +37,7 @@ export default function Home() {
             </Link>
             
             <Link 
-              href="/create"
+              href="/create/"
               className="px-6 py-3 bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all font-medium">
               Create Learning Experience
             </Link>
@@ -46,7 +46,7 @@ export default function Home() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           <Link 
-            href="/create"
+            href="/create/"
             className="group p-8 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700"
           >
             <h2 className="text-2xl font-semibold mb-3 group-hover:text-blue-500 transition-colors">
@@ -61,7 +61,7 @@ export default function Home() {
           </Link>
           
           <Link 
-            href="/manage"
+            href="/manage/"
             className="group p-8 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700"
           >
             <h2 className="text-2xl font-semibold mb-3 group-hover:text-blue-500 transition-colors">
