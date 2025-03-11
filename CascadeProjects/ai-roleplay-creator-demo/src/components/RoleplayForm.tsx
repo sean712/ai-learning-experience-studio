@@ -195,180 +195,239 @@ ${knowledgeBaseInstructions}
   }
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-7xl mx-auto">
       {error && (
         <div className="p-4 bg-red-50 text-red-800 rounded-lg border border-red-200">
           {error}
         </div>
       )}
       
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-2">
-          Learning Experience Name
-        </label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="e.g., GMBA Global Strategy - Evaluating Global Supply Networks"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-          required
-        />
-        <p className="mt-1 text-xs text-gray-500">
-          Format as: Programme - Module - Activity (e.g., GMBA Global Strategy - Evaluating Global Supply Networks)
-        </p>
-      </div>
-      
-      <div>
-        <label htmlFor="interactionType" className="block text-sm font-medium mb-2">
-          Interaction Type
-        </label>
-        <select
-          id="interactionType"
-          value={interactionType}
-          onChange={(e) => setInteractionType(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-        >
-          <option value="roleplay">Roleplay Character</option>
-          <option value="discussion">Discussion Facilitator</option>
-          <option value="feedback">Feedback Coach</option>
-          <option value="tutor">Subject Tutor</option>
-          <option value="custom">Custom Interaction</option>
-        </select>
-        <div className="mt-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-          <p className="font-medium mb-1">About this interaction type:</p>
-          {interactionType === 'roleplay' && (
-            <p>Creates an AI character that takes on a specific role or persona, allowing students to interact with a simulated expert, historical figure, or professional.</p>
-          )}
-          {interactionType === 'discussion' && (
-            <p>Creates an AI facilitator that guides educational discussions, asks thought-provoking questions, and helps students explore topics in depth.</p>
-          )}
-          {interactionType === 'feedback' && (
-            <p>Creates an AI coach that provides constructive feedback on student work, ideas, or practice, helping them improve their skills and understanding.</p>
-          )}
-          {interactionType === 'tutor' && (
-            <p>Creates an AI tutor specialized in a specific subject area, providing explanations, answering questions, and guiding students through learning materials.</p>
-          )}
-          {interactionType === 'custom' && (
-            <p>Creates a custom AI interaction designed for your specific teaching needs, with behavior defined by your detailed instructions.</p>
-          )}
-        </div>
-      </div>
-      
-      <div className="space-y-4">
-        <h3 className="text-md font-medium">AI Learning Experience Details</h3>
-        
-        <div>
-          <label htmlFor="purpose" className="block text-sm font-medium mb-2">
-            Purpose
+      {/* Top section - Basic Info */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="md:col-span-2">
+          <label htmlFor="name" className="block text-sm font-medium mb-2">
+            Learning Experience Name
           </label>
-          <textarea
-            id="purpose"
-            value={purpose}
-            onChange={(e) => setPurpose(e.target.value)}
-            placeholder="What is the educational purpose of this roleplay? What should students learn?"
-            rows={3}
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g., GMBA Global Strategy - Evaluating Global Supply Networks"
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
             required
           />
-        </div>
-        
-        <div>
-          <label htmlFor="context" className="block text-sm font-medium mb-2">
-            Context
-          </label>
-          <textarea
-            id="context"
-            value={context}
-            onChange={(e) => setContext(e.target.value)}
-            placeholder="What is the setting or background of this roleplay? What context should the AI understand?"
-            rows={3}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-            required
-          />
-        </div>
-        
-        {/* Interaction Type field moved to the top, after the title field */}
-        
-        {interactionType === 'roleplay' && (
-          <div>
-            <label htmlFor="persona" className="block text-sm font-medium mb-2">
-              Persona
-            </label>
-            <textarea
-              id="persona"
-              value={persona}
-              onChange={(e) => setPersona(e.target.value)}
-              placeholder="Who will the AI roleplay as? Describe their character, expertise, and personality."
-              rows={3}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-              required
-            />
-          </div>
-        )}
-        
-        <div>
-          <label htmlFor="interactionInstructions" className="block text-sm font-medium mb-2">
-            {interactionType === 'roleplay' ? 'Roleplay' : 
-             interactionType === 'discussion' ? 'Discussion' : 
-             interactionType === 'feedback' ? 'Feedback' : 
-             interactionType === 'tutor' ? 'Tutoring' : 'Interaction'} Instructions
-          </label>
-          <textarea
-            id="interactionInstructions"
-            value={interactionInstructions}
-            onChange={(e) => setInteractionInstructions(e.target.value)}
-            placeholder={`How should the AI interact with students? ${interactionType === 'roleplay' ? 'What character traits should it exhibit?' : 
-                          interactionType === 'discussion' ? 'What discussion techniques should it use?' : 
-                          interactionType === 'feedback' ? 'What feedback approach should it take?' : 
-                          interactionType === 'tutor' ? 'What tutoring methods should it employ?' : 
-                          'What interaction patterns should it follow?'}`}
-            rows={3}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-            required
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="knowledgeBaseInstructions" className="block text-sm font-medium mb-2">
-            Knowledge Base Instructions
-          </label>
-          <textarea
-            id="knowledgeBaseInstructions"
-            value={knowledgeBaseInstructions}
-            onChange={(e) => setKnowledgeBaseInstructions(e.target.value)}
-            placeholder="What knowledge should the AI use? What limitations or boundaries should it observe?"
-            rows={3}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-            required
-          />
-          <p className="mt-2 text-sm text-gray-500">
-            All of these fields will be combined to create comprehensive instructions for the AI assistant.
+          <p className="mt-1 text-xs text-gray-500">
+            Format as: Programme - Module - Activity
           </p>
         </div>
+
+        {/* Left column - Interaction Type and Model */}
+        <div>
+          <label htmlFor="interactionType" className="block text-sm font-medium mb-2">
+            Interaction Type
+          </label>
+          <select
+            id="interactionType"
+            value={interactionType}
+            onChange={(e) => setInteractionType(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <option value="roleplay">Roleplay Character</option>
+            <option value="discussion">Discussion Facilitator</option>
+            <option value="feedback">Feedback Coach</option>
+            <option value="tutor">Subject Tutor</option>
+            <option value="custom">Custom Interaction</option>
+          </select>
+          <div className="mt-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg h-24 overflow-auto">
+            <p className="font-medium mb-1">About this interaction type:</p>
+            {interactionType === 'roleplay' && (
+              <p>Creates an AI character that takes on a specific role or persona, allowing students to interact with a simulated expert, historical figure, or professional.</p>
+            )}
+            {interactionType === 'discussion' && (
+              <p>Creates an AI facilitator that guides educational discussions, asks thought-provoking questions, and helps students explore topics in depth.</p>
+            )}
+            {interactionType === 'feedback' && (
+              <p>Creates an AI coach that provides constructive feedback on student work, ideas, or practice, helping them improve their skills and understanding.</p>
+            )}
+            {interactionType === 'tutor' && (
+              <p>Creates an AI tutor specialized in a specific subject area, providing explanations, answering questions, and guiding students through learning materials.</p>
+            )}
+            {interactionType === 'custom' && (
+              <p>Creates a custom AI interaction designed for your specific teaching needs, with behavior defined by your detailed instructions.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Right column - Model and Access Settings */}
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="model" className="block text-sm font-medium mb-2">
+              AI Model
+            </label>
+            <select
+              id="model"
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+            >
+              <option value="gpt-4o">GPT-4o (Recommended)</option>
+              <option value="gpt-4o-mini">GPT-4o-mini (Faster)</option>
+              <option value="o1">o1 (Most Capable)</option>
+            </select>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <input
+              id="isPublic"
+              type="checkbox"
+              checked={isPublic}
+              onChange={(e) => setIsPublic(e.target.checked)}
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <label htmlFor="isPublic" className="text-sm font-medium">
+              Make Publicly Available
+            </label>
+            <span className="text-xs text-gray-500">
+              (No access code required)
+            </span>
+          </div>
+        </div>
       </div>
       
-      <div>
-        <label htmlFor="model" className="block text-sm font-medium mb-2">
-          AI Model
-        </label>
-        <select
-          id="model"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-        >
-          <option value="gpt-4o">GPT-4o (Recommended)</option>
-          <option value="gpt-4o-mini">GPT-4o-mini (Faster)</option>
-          <option value="o1">o1 (Most Capable)</option>
-        </select>
+      {/* Middle section - Content Details */}
+      <div className="bg-gray-50 p-4 rounded-lg">
+        <h3 className="text-md font-medium mb-4">AI Learning Experience Details</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left column */}
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="purpose" className="block text-sm font-medium mb-2">
+                Purpose
+              </label>
+              <textarea
+                id="purpose"
+                value={purpose}
+                onChange={(e) => setPurpose(e.target.value)}
+                placeholder="What is the educational purpose of this experience? What should students learn?"
+                rows={2}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+                required
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="context" className="block text-sm font-medium mb-2">
+                Context
+              </label>
+              <textarea
+                id="context"
+                value={context}
+                onChange={(e) => setContext(e.target.value)}
+                placeholder="What is the setting or background of this experience? What context should the AI understand?"
+                rows={2}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+                required
+              />
+            </div>
+            
+            {interactionType === 'roleplay' && (
+              <div>
+                <label htmlFor="persona" className="block text-sm font-medium mb-2">
+                  Persona
+                </label>
+                <textarea
+                  id="persona"
+                  value={persona}
+                  onChange={(e) => setPersona(e.target.value)}
+                  placeholder="Who will the AI roleplay as? Describe their character, expertise, and personality."
+                  rows={2}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+                  required
+                />
+              </div>
+            )}
+          </div>
+          
+          {/* Right column */}
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="interactionInstructions" className="block text-sm font-medium mb-2">
+                {interactionType === 'roleplay' ? 'Roleplay' : 
+                interactionType === 'discussion' ? 'Discussion' : 
+                interactionType === 'feedback' ? 'Feedback' : 
+                interactionType === 'tutor' ? 'Tutoring' : 'Interaction'} Instructions
+              </label>
+              <textarea
+                id="interactionInstructions"
+                value={interactionInstructions}
+                onChange={(e) => setInteractionInstructions(e.target.value)}
+                placeholder={`How should the AI interact with students? ${interactionType === 'roleplay' ? 'What character traits should it exhibit?' : 
+                              interactionType === 'discussion' ? 'What discussion techniques should it use?' : 
+                              interactionType === 'feedback' ? 'What feedback approach should it take?' : 
+                              interactionType === 'tutor' ? 'What tutoring methods should it employ?' : 
+                              'What interaction patterns should it follow?'}`}
+                rows={3}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+                required
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="knowledgeBaseInstructions" className="block text-sm font-medium mb-2">
+                Knowledge Base Instructions
+              </label>
+              <textarea
+                id="knowledgeBaseInstructions"
+                value={knowledgeBaseInstructions}
+                onChange={(e) => setKnowledgeBaseInstructions(e.target.value)}
+                placeholder="What knowledge should the AI use? What limitations or boundaries should it observe?"
+                rows={3}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
+                required
+              />
+            </div>
+          </div>
+        </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Bottom section - Materials and Access */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left column - Learning Materials */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Learning Materials (Optional)
+          </label>
+          <div className="border border-gray-200 rounded-lg p-4">
+            <FileUpload onFileUploaded={handleFileUploaded} />
+            
+            {uploadedFiles.length > 0 && (
+              <div className="mt-4">
+                <h4 className="text-sm font-medium mb-2">Uploaded Materials:</h4>
+                <ul className="space-y-2 max-h-32 overflow-y-auto">
+                  {uploadedFiles.map((file) => (
+                    <li key={file.id} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <span className="text-sm truncate max-w-[80%]">{file.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeFile(file.id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {/* Right column - Access Code */}
         <div>
           <label htmlFor="accessCode" className="block text-sm font-medium mb-2">
-            Access Code (Required)
+            Access Code {!isPublic && <span className="text-red-500">*</span>}
           </label>
           <input
             id="accessCode"
@@ -377,68 +436,22 @@ ${knowledgeBaseInstructions}
             onChange={(e) => setAccessCode(e.target.value)}
             placeholder="e.g., class123"
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700"
-            required
+            required={!isPublic}
           />
           <p className="mt-1 text-sm text-gray-500">
-            Students will need this code to access the roleplay experience
+            Students will need this code to access the learning experience
           </p>
-        </div>
-        
-        <div>
-          <label htmlFor="isPublic" className="flex items-center space-x-2 mb-2">
-            <input
-              id="isPublic"
-              type="checkbox"
-              checked={isPublic}
-              onChange={(e) => setIsPublic(e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <span className="text-sm font-medium">Make Publicly Available</span>
-          </label>
-          <p className="text-sm text-gray-500 mt-1">
-            If checked, anyone with the link can access without an access code
-          </p>
-        </div>
-      </div>
-      
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Learning Materials (Optional)
-        </label>
-        <p className="text-xs text-gray-500 mb-2">
-          Upload course materials, readings, or reference documents for the AI to use in the roleplay
-        </p>
-        <FileUpload onFileUploaded={handleFileUploaded} />
-        
-        {uploadedFiles.length > 0 && (
-          <div className="mt-4">
-            <h4 className="text-sm font-medium mb-2">Uploaded Materials:</h4>
-            <ul className="space-y-2">
-              {uploadedFiles.map((file) => (
-                <li key={file.id} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <span className="text-sm truncate max-w-[80%]">{file.name}</span>
-                  <button
-                    type="button"
-                    onClick={() => removeFile(file.id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    Remove
-                  </button>
-                </li>
-              ))}
-            </ul>
+          
+          <div className="mt-8">
+            <button
+              type="submit"
+              disabled={isCreating || (!isPublic && !accessCode.trim())}
+              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isCreating ? 'Creating Learning Experience...' : 'Create AI Learning Experience'}
+            </button>
           </div>
-        )}
-      </div>
-      
-      <div className="pt-4">
-        <button
-          type="submit"
-          disabled={isCreating || !accessCode.trim()}
-          className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isCreating ? 'Creating Learning Experience...' : 'Create AI Learning Experience'}
-        </button>
+        </div>
       </div>
     </form>
   );
