@@ -1,5 +1,5 @@
 [build]
-  base = "CascadeProjects/ai-roleplay-creator-demo"
+  base = "/"
   command = "npm install && npm run build"
   publish = ".next"
 
