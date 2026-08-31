@@ -1,0 +1,10 @@
+/* Tailwind CSS v4 is imported as a single entry point. All styling in the app
+   is done with Tailwind utility classes used inline in the components. */
+@import "tailwindcss";
+
+/* Give the document full height so that exercises using `min-h-full` fill the
+   available space, including when a route is embedded in a Canvas iframe. */
+html,
+body {
+  height: 100%;
+}
