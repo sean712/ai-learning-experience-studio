@@ -1,0 +1,24 @@
+{
+  "name": "ai-learning-experience-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A simple site that hosts interactive learning exercises, each at its own /slug for iframing into Canvas.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "lucide-react": "^0.477.0",
+    "next": "15.5.25",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.25",
+    "tailwindcss": "^4"
+  }
+}
