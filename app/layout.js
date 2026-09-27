@@ -3,6 +3,7 @@
 // right when embedded on its own in a Canvas iframe. The home page provides its
 // own header and menu.
 import "./globals.css";
+import IframeAutoHeight from "./iframe-auto-height";
 
 // Default metadata. Individual exercise routes override the title through their
 // own `metadata` export so browser tabs and assistive technology announce the
@@ -20,7 +21,13 @@ export default function RootLayout({ children }) {
   // lang is set to en-GB so screen readers use British English pronunciation.
   return (
     <html lang="en-GB" className="h-full">
-      <body className="h-full">{children}</body>
+      <body className="h-full">
+        {children}
+        {/* Reports content height to the parent so a Canvas embed can size the
+            iframe to fit (see README). Rendered last so it does not become the
+            body's first element, which the reporter measures. */}
+        <IframeAutoHeight />
+      </body>
     </html>
   );
 }

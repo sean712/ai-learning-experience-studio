@@ -97,3 +97,48 @@ iframe pointing at its slug, for example:
 The app sends a `Content-Security-Policy: frame-ancestors *` header (see
 `next.config.mjs`) so pages can be framed. You can tighten this to your
 institution's Canvas domain(s) once known.
+
+### Auto-resizing the iframe to fit the content
+
+A cross-origin iframe never grows to fit its content, so a fixed height is
+either too tall (empty space) or too short (the content scrolls inside the
+iframe). This is awkward for exercises whose height changes — for example a poll
+that reveals a long block of feedback after the student submits.
+
+Every page reports its true content height to the parent window via
+`postMessage` (see `app/iframe-auto-height.js`). To make the iframe resize to
+match, the **embedding page needs a small one-time listener**. In Canvas this
+goes in the global theme JavaScript (Admin → Themes → your theme → Upload →
+Custom JavaScript), so it applies to every embedded exercise:
+
+```js
+// Resize embedded learning-experience iframes to fit their content.
+window.addEventListener("message", function (event) {
+  var data = event.data;
+  if (!data || data.type !== "ai-studio:resize") return;
+  var iframes = document.getElementsByTagName("iframe");
+  for (var i = 0; i < iframes.length; i++) {
+    if (iframes[i].contentWindow === event.source) {
+      iframes[i].style.height = data.height + "px";
+      iframes[i].style.minHeight = "0";
+    }
+  }
+});
+```
+
+With that in place, embed the iframe with a small starting height (a placeholder
+until the first resize message arrives) and no fixed height:
+
+```html
+<iframe
+  src="https://your-deployment.example.com/bpes-income-and-demand"
+  title="Income and demand"
+  style="display: block; width: 100%; min-height: 300px; border: 0;"
+  loading="lazy"
+></iframe>
+```
+
+The listener matches messages to the iframe by `contentWindow`, so it only
+resizes our own exercises and ignores messages from anything else. If the
+listener is not present the exercises still work — the iframe just keeps
+whatever height you set, as before.
