@@ -98,18 +98,43 @@ The app sends a `Content-Security-Policy: frame-ancestors *` header (see
 `next.config.mjs`) so pages can be framed. You can tighten this to your
 institution's Canvas domain(s) once known.
 
-### Auto-resizing the iframe to fit the content
+### Height and feedback (the fixed-iframe problem)
 
 A cross-origin iframe never grows to fit its content, so a fixed height is
-either too tall (empty space) or too short (the content scrolls inside the
-iframe). This is awkward for exercises whose height changes — for example a poll
-that reveals a long block of feedback after the student submits.
+either too tall (empty space) or too short (the content scrolls). This is
+awkward for exercises whose height changes — for example a poll that reveals a
+long block of feedback after the student submits.
 
-Every page reports its true content height to the parent window via
-`postMessage` (see `app/iframe-auto-height.js`). To make the iframe resize to
-match, the **embedding page needs a small one-time listener**. In Canvas this
-goes in the global theme JavaScript (Admin → Themes → your theme → Upload →
-Custom JavaScript), so it applies to every embedded exercise:
+**Default behaviour (no Canvas setup needed):** size the iframe to fit the
+exercise's interactive part (the poll, table or board), so there is no empty
+space. When a student submits, the exercise **scrolls its feedback to the top of
+the iframe** automatically (see `app/scroll-to-result.js`), so the result is
+never left below the fold; the student then reads any long feedback with normal
+scrolling inside the iframe. The scroll happens only inside the iframe, so the
+Canvas page never jumps.
+
+```html
+<iframe
+  src="https://your-deployment.example.com/bpes-income-and-demand"
+  title="Income and demand"
+  style="display: block; width: 100%; height: 700px; border: 0;"
+  loading="lazy"
+></iframe>
+```
+
+Pick a `height` that fits the interactive part of each exercise (roughly
+600–760px for the polls and tables). The exact value is not critical — it just
+avoids empty space before submitting.
+
+### Optional: auto-resizing the iframe (needs Canvas admin JavaScript)
+
+If you can add JavaScript to Canvas (this needs admin access to the global theme
+and is not available on every account), the iframe can resize itself to fit the
+content exactly, removing even the reading scroll. Every page reports its true
+content height to the parent window via `postMessage` (see
+`app/iframe-auto-height.js`). Add this one-time listener in Canvas (Admin →
+Themes → your theme → Upload → Custom JavaScript), so it applies to every
+embedded exercise:
 
 ```js
 // Resize embedded learning-experience iframes to fit their content.

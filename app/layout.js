@@ -4,6 +4,7 @@
 // own header and menu.
 import "./globals.css";
 import IframeAutoHeight from "./iframe-auto-height";
+import ScrollToResult from "./scroll-to-result";
 
 // Default metadata. Individual exercise routes override the title through their
 // own `metadata` export so browser tabs and assistive technology announce the
@@ -27,6 +28,9 @@ export default function RootLayout({ children }) {
             iframe to fit (see README). Rendered last so it does not become the
             body's first element, which the reporter measures. */}
         <IframeAutoHeight />
+        {/* Scrolls a revealed feedback/confirmation/solution panel into view, so
+            the result is not left below the fold in a fixed-height iframe. */}
+        <ScrollToResult />
       </body>
     </html>
   );
